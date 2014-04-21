@@ -1,0 +1,44 @@
+en:
+  opennebula_provider:
+    info:
+      connecting: |-
+        Connecting to OpenNebula
+      creating: |-
+        Creating a new instance... 
+      not_created: |-
+        Instance is not created
+      destroying: |-
+        Machine %{machine} is destroying...
+      state: |-
+        Machine state is %{state}
+      rsyncing: |-
+        Rsyncing folder: %{hostpath} => %{guestpath}...
+      rsync_not_found_warning: |-
+        Warning! Folder sync disabled because the rsync binary is missing in the %{side}.
+        Make sure rsync is installed and the binary can be found in the PATH.
+
+    states:
+      short_not_created: |-
+        not created
+      long_not_created: |-
+        The OpenNebula instance is not created
+
+      short_active: |-
+        active
+      long_active: |-
+        Instance is active
+
+      short_running: |-
+        running
+      long_running: |-
+        The OpenNebula instance is running
+
+    config:
+      endpoint: |-
+        rOCCI-server endpoint is not set
+      username: |-
+        Username is not set
+      password: |-
+        Password is not set
+      resource_tpl: |-
+        A resource template must defined via "resource_tpl"
