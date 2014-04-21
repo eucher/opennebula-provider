@@ -5,7 +5,7 @@ require 'opennebula-provider/version'
 Gem::Specification.new do |spec|
   spec.name          = 'opennebula-provider'
   spec.version       = VagrantPlugins::OpenNebulaProvider::VERSION
-  spec.authors       = ['eucher']
+  spec.authors       = ['Cherdancev Evgeni']
   spec.email         = ['cyber@sibnet.ru']
   spec.description   = %q{OpenNebula provider for Vagrant}
   spec.summary       = spec.description

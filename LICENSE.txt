@@ -1,4 +1,4 @@
-Copyright (c) 2014 eucher
+Copyright (c) 2014 Cherdancev Evgeni
 
 MIT License
 
