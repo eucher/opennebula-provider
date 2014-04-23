@@ -43,15 +43,15 @@ module VagrantPlugins
         rescue RuntimeError => e
           case e.message
           when /(?<ms>\[VirtualMachineAllocate\])/
-            message_scope = $~[:ms]
+            message_scope = $LAST_MATCH_INFO[:ms]
             case e.message
             when /quota/
-              raise Errors::QuotaError, {error: e.message.split(message_scope)[1].to_s }
+              raise Errors::QuotaError, error: e.message.split(message_scope)[1].to_s
             else
-              raise Errors::AllocateError, {error: e }
+              raise Errors::AllocateError, error: e
             end
           end
-          raise Errors::ComputeError, {error: e }
+          raise Errors::ComputeError, error: e
         end
 
         def delete(id)

@@ -2,7 +2,7 @@ module VagrantPlugins
   module OpenNebulaProvider
     module Errors
       class OpenNebulaProviderError < Vagrant::Errors::VagrantError
-        error_namespace("opennebula_provider.errors")
+        error_namespace('opennebula_provider.errors')
       end
 
       class QuotaError < OpenNebulaProviderError
