@@ -42,3 +42,11 @@ en:
         Password is not set
       resource_tpl: |-
         A resource template must defined via "resource_tpl"
+
+    errors:
+      compute: |-
+        Compute error! %{error}
+      quota: |-
+        Quota error! %{error}
+      allocate: |-
+        Allocation error! %{error}

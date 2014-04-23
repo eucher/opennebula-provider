@@ -40,6 +40,18 @@ module VagrantPlugins
           cmpt_loc = @rocci.create cmpt
           @logger.info "Location of new compute resource: #{cmpt_loc}"
           cmpt_loc
+        rescue RuntimeError => e
+          case e.message
+          when /(?<ms>\[VirtualMachineAllocate\])/
+            message_scope = $~[:ms]
+            case e.message
+            when /quota/
+              raise Errors::QuotaError, {error: e.message.split(message_scope)[1].to_s }
+            else
+              raise Errors::AllocateError, {error: e }
+            end
+          end
+          raise Errors::ComputeError, {error: e }
         end
 
         def delete(id)

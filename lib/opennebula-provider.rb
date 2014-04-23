@@ -1,3 +1,4 @@
+require 'opennebula-provider/errors'
 require 'opennebula-provider/plugin'
 
 module VagrantPlugins
