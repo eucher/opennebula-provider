@@ -49,6 +49,7 @@ end
 * `auth` - OpenNebula authorization method, default: basic
 * `os_tpl` - OpenNebula os template
 * `resource_tpl` - OpenNebula resource template, default: small
+* `title` - OpenNebula instance name
 
 ## Contributing
 

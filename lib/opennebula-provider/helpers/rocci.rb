@@ -36,7 +36,7 @@ module VagrantPlugins
           os = @rocci.get_mixin @config.os_tpl, 'os_tpl'
           size = @rocci.get_mixin @config.resource_tpl, 'resource_tpl'
           cmpt.mixins << os << size
-          cmpt.title = 'testROCCIvagrant'
+          cmpt.title = @config.title if @config.title
           cmpt_loc = @rocci.create cmpt
           @logger.info "Location of new compute resource: #{cmpt_loc}"
           cmpt_loc

@@ -7,6 +7,7 @@ module VagrantPlugins
       attr_accessor :password
       attr_accessor :os_tpl
       attr_accessor :resource_tpl
+      attr_accessor :title
 
       def initialize
         @endpoint = UNSET_VALUE
@@ -15,6 +16,7 @@ module VagrantPlugins
         @password = UNSET_VALUE
         @os_tpl = UNSET_VALUE
         @resource_tpl = UNSET_VALUE
+        @title = UNSET_VALUE
       end
 
       def finalize!
@@ -24,6 +26,7 @@ module VagrantPlugins
         @password = nil if @password == UNSET_VALUE
         @os_tpl = nil if @os_tpl == UNSET_VALUE
         @resource_tpl = 'small' if @resource_tpl == UNSET_VALUE
+        @title = nil if @title == UNSET_VALUE
       end
 
       def validate(machine)
