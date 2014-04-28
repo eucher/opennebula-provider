@@ -23,6 +23,11 @@ en:
       long_not_created: |-
         The OpenNebula instance is not created
 
+      short_inactive: |-
+        inactive
+      long_inactive: |-
+        Instance is inactive
+
       short_active: |-
         active
       long_active: |-
