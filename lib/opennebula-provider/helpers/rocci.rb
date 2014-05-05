@@ -23,11 +23,17 @@ module VagrantPlugins
               password: @config.password
             }
 #              :log => {
-              #:out   => STDERR,
-              #:level => Occi::Api::Log::DEBUG
+#              :out   => STDERR,
+#              :level => Occi::Api::Log::DEBUG
 #            }
           }
-          @rocci = Occi::Api::Client::ClientHttp.new(options)
+          begin
+            @rocci = Occi::Api::Client::ClientHttp.new(options)
+          rescue Errno::ECONNREFUSED => e
+            raise Errors::ConnectError, error: e
+          rescue Occi::Api::Client::Errors::AuthnError => e
+            raise Errors::AuthError, error: e
+          end
         end
 
         def compute
@@ -65,7 +71,11 @@ module VagrantPlugins
 
         def machine_state(id)
           if id
-            desc = @rocci.describe id
+            begin
+              desc = @rocci.describe id
+            rescue ArgumentError => e
+              raise Errors::ResourceError, error: e
+            end
             return :not_created if desc.empty?
             return desc.first.attributes.occi.compute.state
           else

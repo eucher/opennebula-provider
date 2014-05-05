@@ -49,9 +49,15 @@ en:
         A resource template must defined via "resource_tpl"
 
     errors:
-      compute: |-
-        Compute error! %{error}
-      quota: |-
-        Quota error! %{error}
       allocate: |-
         Allocation error! %{error}
+      auth: |-
+        Authentication error! %{error}
+      compute: |-
+        Compute error! %{error}
+      connect: |-
+        Connect error! %{error}
+      resource: |-
+        Resource error! %{error}
+      quota: |-
+        Quota error! %{error}
