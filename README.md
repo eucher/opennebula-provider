@@ -1,6 +1,6 @@
 # OpenNebula::Provider
 
-[![Gem Version](https://badge.fury.io/rb/opennebula-provider.png)](https://rubygems.org/gems/opennebula-provider) 
+[![Gem Version](https://badge.fury.io/rb/opennebula-provider.svg)](https://rubygems.org/gems/opennebula-provider) 
 
 This is a Vagrant 1.5 plugin that add an OpenNebula provider to Vagrant.
 
