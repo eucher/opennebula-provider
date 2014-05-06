@@ -39,8 +39,23 @@ module VagrantPlugins
         def compute
           @logger.info 'compute!'
           cmpt = @rocci.get_resource 'compute'
+
           os = @rocci.get_mixin @config.os_tpl, 'os_tpl'
+          unless os
+            mixins = @rocci.get_mixins 'os_tpl'
+            mixins.each do |mixin|
+              if mixin.title == @config.os_tpl
+                os = @rocci.get_mixin mixin.term, 'os_tpl'
+              end
+            end
+            fail Errors::ComputeError, error: I18n.t('opennebula_provider.compute.os_missing', template: @config.os_tpl) unless os
+          end
+
           size = @rocci.get_mixin @config.resource_tpl, 'resource_tpl'
+          unless size
+            fail Errors::ComputeError, error: I18n.t('opennebula_provider.compute.resource_size_missing', template: @config.resource_tpl)
+          end
+
           cmpt.mixins << os << size
           cmpt.title = @config.title if @config.title
           cmpt_loc = @rocci.create cmpt

@@ -34,7 +34,7 @@ module VagrantPlugins
         errors << I18n.t('opennebula_provider.config.endpoint') unless @endpoint
         errors << I18n.t('opennebula_provider.config.username') unless @username
         errors << I18n.t('opennebula_provider.config.password') unless @password
-        errors << I18n.t('opennebula_provider.config.resource_tpl') unless @resource_tpl
+        errors << I18n.t('opennebula_provider.config.os_tpl') unless @os_tpl
 
         { 'OpenNebula provider' => errors }
       end

@@ -4,7 +4,7 @@ en:
       connecting: |-
         Connecting to OpenNebula
       creating: |-
-        Creating a new instance... 
+        Creating a new instance...
       not_created: |-
         Instance is not created
       destroying: |-
@@ -45,8 +45,14 @@ en:
         Username is not set
       password: |-
         Password is not set
-      resource_tpl: |-
-        A resource template must defined via "resource_tpl"
+      os_tpl: |-
+        An os template must defined via "os_tpl"
+
+    compute:
+      os_missing: |-
+        Os template "%{template}" is not defined in OpenNebula
+      resource_size_missing: |-
+        Resource size "%{size}" is not defined in rOCCI-server
 
     errors:
       allocate: |-
