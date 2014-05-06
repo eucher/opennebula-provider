@@ -52,7 +52,7 @@ en:
       os_missing: |-
         Os template "%{template}" is not defined in OpenNebula
       resource_size_missing: |-
-        Resource size "%{size}" is not defined in rOCCI-server
+        Resource size "%{template}" is not defined in rOCCI-server
 
     errors:
       allocate: |-
