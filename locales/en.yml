@@ -33,6 +33,11 @@ en:
       long_active: |-
         Instance is active
 
+      short_waiting: |-
+        waiting
+      long_waiting: |-
+        Instance is waiting to create or boot
+
       short_running: |-
         running
       long_running: |-
