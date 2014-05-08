@@ -17,7 +17,7 @@ module VagrantPlugins
             b1.use ConnectOpenNebula
             b1.use Call, CheckState do |env2, b2|
               case env2[:machine_state]
-              when :active
+              when :active, :error
                 b2.use Destroy
               end
             end
