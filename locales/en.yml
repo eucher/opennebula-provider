@@ -43,6 +43,11 @@ en:
       long_running: |-
         The OpenNebula instance is running
 
+      short_error: |-
+        error
+      long_error: |-
+        The OpenNebula instance cannot be started
+
     config:
       endpoint: |-
         rOCCI-server endpoint is not set
