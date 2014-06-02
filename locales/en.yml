@@ -9,10 +9,16 @@ en:
         Instance is not created
       already_created: |-
         Instance already created
+      already_destroyed: |-
+        Instance already destroyed
+      already_halted: |-
+        Instance already halted
       destroying: |-
-        Machine %{machine} is destroying...
+        Instance %{machine} is destroying...
       state: |-
-        Machine state is %{state}
+        Instance state is %{state}
+      waiting_for_sshd: |-
+        Instance is active, waiting for sshd daemon startup...
       rsyncing: |-
         Rsyncing folder: %{hostpath} => %{guestpath}...
       rsync_not_found_warning: |-

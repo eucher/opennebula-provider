@@ -2,7 +2,7 @@ require_relative 'action/check_state'
 require_relative 'action/connect_opennebula'
 require_relative 'action/create'
 require_relative 'action/destroy'
-require_relative 'action/message_already_created'
+require_relative 'action/messages'
 require_relative 'action/read_ssh_info'
 require_relative 'action/sync_folders'
 require_relative 'action/start'
@@ -20,9 +20,11 @@ module VagrantPlugins
             b1.use ConnectOpenNebula
             b1.use Call, CheckState do |env2, b2|
               case env2[:machine_state]
-              when :active, :error, :suspended
+              when :active, :error, :suspended, :inactive
                 b2.use Destroy
                 b2.use ProvisionerCleanup if defined?(ProvisionerCleanup)
+              when :not_created
+                b2.use MessageAlreadyDestroyed
               end
             end
           end
@@ -54,7 +56,28 @@ module VagrantPlugins
             case env1[:machine_state]
             when :active
               b1.use Stop
+            when :suspended
+              b1.use MessageAlreadyHalted
+            when :not_created, :inactive
+              b1.use MessageNotCreated
             end
+          end
+        end
+      end
+
+      def self.reload
+        Vagrant::Action::Builder.new.tap do |b|
+          b.use ConfigValidate
+          b.use ConnectOpenNebula
+          b.use Call, CheckState do |env1, b1|
+            case env1[:machine_state]
+            when :not_created
+              b1.use MessageNotCreated
+              next
+            end
+
+            b1.use halt
+            b1.use up
           end
         end
       end
