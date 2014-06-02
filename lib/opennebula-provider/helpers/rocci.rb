@@ -75,13 +75,19 @@ module VagrantPlugins
           raise Errors::ComputeError, error: e
         end
 
+        def stop(id)
+          @logger.info 'stop!'
+          @rocci.trigger id, action_instance(id, 'stop')
+        end
+
+        def start(id)
+          @logger.info 'start!'
+          @rocci.trigger id, action_instance(id, 'start')
+        end
+
         def delete(id)
           @logger.info 'delete!'
           @rocci.delete id
-        end
-
-        def describe_resource(resource)
-          @rocci.describe resource
         end
 
         def machine_state(id)
@@ -111,7 +117,7 @@ module VagrantPlugins
         end
 
         def wait_for_event(env, id)
-          retryable(tries: 120, sleep: 10) do
+          retryable(tries: 10, sleep: 6) do
             # stop waiting if interrupted
             next if env[:interrupted]
 
@@ -119,9 +125,24 @@ module VagrantPlugins
             result = machine_state(id)
 
             yield result if block_given?
-            fail 'not ready' if result != 'active'
+            fail Errors::ComputeError, error: 'Not ready' if result != 'active'
           end
         end
+
+        private
+
+        def action_instance(id,action)
+          desc = describe_resource(id)
+          action_ = desc.first.actions.map do |ai|
+            ai.term == action ? ai : nil
+          end.compact.first
+          Occi::Core::ActionInstance.new action_, nil
+        end
+
+        def describe_resource(resource)
+          @rocci.describe resource
+        end
+
       end
     end
   end
