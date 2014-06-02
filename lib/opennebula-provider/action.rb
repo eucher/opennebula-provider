@@ -2,6 +2,7 @@ require_relative 'action/check_state'
 require_relative 'action/connect_opennebula'
 require_relative 'action/create'
 require_relative 'action/destroy'
+require_relative 'action/message_already_created'
 require_relative 'action/read_ssh_info'
 require_relative 'action/sync_folders'
 
@@ -32,7 +33,7 @@ module VagrantPlugins
           b.use Call, CheckState do |env, b1|
             case env[:machine_state]
             when :active
-              p 'active' # TODO, use logger
+              b1.use MessageAlreadyCreated
             when :not_created
               b1.use Create
             end

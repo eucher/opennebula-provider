@@ -7,6 +7,8 @@ en:
         Creating a new instance...
       not_created: |-
         Instance is not created
+      already_created: |-
+        Instance already created
       destroying: |-
         Machine %{machine} is destroying...
       state: |-
