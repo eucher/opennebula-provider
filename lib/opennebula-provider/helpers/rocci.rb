@@ -128,7 +128,7 @@ module VagrantPlugins
 
         private
 
-        def action_instance(id,action)
+        def action_instance(id, action)
           desc = describe_resource(id)
           action_ = desc.first.actions.map do |ai|
             ai.term == action ? ai : nil
@@ -139,7 +139,6 @@ module VagrantPlugins
         def describe_resource(resource)
           @rocci.describe resource
         end
-
       end
     end
   end
