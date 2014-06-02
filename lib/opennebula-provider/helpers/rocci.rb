@@ -116,16 +116,13 @@ module VagrantPlugins
           networkinterface[:address]
         end
 
-        def wait_for_event(env, id)
+        def wait_for_state(env, state)
           retryable(tries: 10, sleep: 6) do
-            # stop waiting if interrupted
             next if env[:interrupted]
-
-            # check event status
-            result = machine_state(id)
+            result = machine_state(env[:machine].id)
 
             yield result if block_given?
-            fail Errors::ComputeError, error: 'Not ready' if result != 'active'
+            fail Errors::ComputeError, error: 'Not ready' if result != state
           end
         end
 

@@ -53,7 +53,7 @@ en:
       short_suspended: |-
         suspended
       long_suspended: |-
-        The OpenNebula instance is suspended
+        The OpenNebula instance is suspended or halted
 
     config:
       endpoint: |-

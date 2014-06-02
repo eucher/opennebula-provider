@@ -10,8 +10,8 @@ module VagrantPlugins
         def call(env)
           @logger.info I18n.t('opennebula_provider.info.creating')
           result = env[:rocci].compute
-          env[:rocci].wait_for_event(env, result)
           env[:machine].id = result
+          env[:rocci].wait_for_state(env, 'active')
           @app.call(env)
         end
       end

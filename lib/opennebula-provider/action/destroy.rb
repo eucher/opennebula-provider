@@ -4,7 +4,7 @@ module VagrantPlugins
       class Destroy
         def initialize(app, env)
           @app = app
-          @logger = Log4r::Logger.new('vagrant::provider::opennebula::create')
+          @logger = Log4r::Logger.new('vagrant::provider::opennebula::destroy')
         end
 
         def call(env)

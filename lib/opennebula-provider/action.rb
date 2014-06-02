@@ -20,7 +20,7 @@ module VagrantPlugins
             b1.use ConnectOpenNebula
             b1.use Call, CheckState do |env2, b2|
               case env2[:machine_state]
-              when :active, :error
+              when :active, :error, :suspended
                 b2.use Destroy
                 b2.use ProvisionerCleanup if defined?(ProvisionerCleanup)
               end
@@ -39,7 +39,7 @@ module VagrantPlugins
               b1.use MessageAlreadyCreated
             when :suspended
               b1.use Start
-            when :not_created
+            when :not_created, :inactive
               b1.use Create
             end
           end
