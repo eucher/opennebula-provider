@@ -48,6 +48,11 @@ en:
       long_error: |-
         The OpenNebula instance cannot be started
 
+      short_suspended: |-
+        suspended
+      long_suspended: |-
+        The OpenNebula instance is suspended
+
     config:
       endpoint: |-
         rOCCI-server endpoint is not set
