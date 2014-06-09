@@ -117,7 +117,7 @@ module VagrantPlugins
         end
 
         def wait_for_state(env, state)
-          retryable(tries: 10, sleep: 6) do
+          retryable(tries: 100, sleep: 6) do
             next if env[:interrupted]
             result = machine_state(env[:machine].id)
 
