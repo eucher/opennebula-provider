@@ -12,8 +12,8 @@ module VagrantPlugins
       def initialize
         @endpoint = UNSET_VALUE
         @auth = UNSET_VALUE
-        @username = UNSET_VALUE
-        @password = UNSET_VALUE
+        @username = ENV['ONE_USER'] || UNSET_VALUE
+        @password = ENV['ONE_PASSWORD'] || UNSET_VALUE
         @os_tpl = UNSET_VALUE
         @resource_tpl = UNSET_VALUE
         @title = UNSET_VALUE
