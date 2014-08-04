@@ -10,7 +10,7 @@ module VagrantPlugins
       attr_accessor :title
 
       def initialize
-        @endpoint = UNSET_VALUE
+        @endpoint = ENV['ONE_ENDPOINT'] || UNSET_VALUE
         @auth = UNSET_VALUE
         @username = ENV['ONE_USER'] || UNSET_VALUE
         @password = ENV['ONE_PASSWORD'] || UNSET_VALUE
@@ -20,7 +20,7 @@ module VagrantPlugins
       end
 
       def finalize!
-        @endpoint = nil if @endpoint == UNSET_VALUE
+        @endpoint = nil if @endpoint == UNSET_VALUE || @endpoint.empty?
         @auth = 'basic' if @auth == UNSET_VALUE
         @username = nil if @username == UNSET_VALUE
         @password = nil if @password == UNSET_VALUE
