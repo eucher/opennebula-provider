@@ -2,7 +2,7 @@
 
 [![Gem Version](https://badge.fury.io/rb/opennebula-provider.svg)](https://rubygems.org/gems/opennebula-provider) 
 
-This is a Vagrant 1.5 plugin that add an OpenNebula provider to Vagrant.
+This is a Vagrant 1.5+ plugin that add an OpenNebula provider to Vagrant.
 
 **NOTE:** This plugin requires occi-api gem and works with [rOCCI-server](https://github.com/gwdg/rOCCI-server/).
 
@@ -50,6 +50,10 @@ end
 * `os_tpl` - OpenNebula os template
 * `resource_tpl` - OpenNebula resource template, default: small
 * `title` - OpenNebula instance name
+
+You can use ONE_USER, ONE_PASSWORD, ONE_ENDPOINT environment variables
+instead of defining it in Vagrantfile.
+However, Vagrantfile's provider config has more priority.
 
 ## Contributing
 
