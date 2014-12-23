@@ -38,7 +38,7 @@ module VagrantPlugins
 
             # on windows rsync.exe requires cygdrive-style paths
             if Vagrant::Util::Platform.windows?
-              hostpath = hostpath.gsub(/^(?<disk>\w):/) { "/cygdrive/#{:disk}" }
+              hostpath = hostpath.gsub(/^(\w):/) { "/cygdrive/#{$1}" }
             end
             env[:ui].info(I18n.t('opennebula_provider.info.rsyncing', hostpath: hostpath, guestpath: guestpath))
 
