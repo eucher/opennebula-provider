@@ -43,6 +43,17 @@ module VagrantPlugins
           @app.call(env)
         end
       end
+
+      class MessageWillNotDestroy
+        def initialize(app, env)
+          @app = app
+        end
+
+        def call(env)
+          env[:ui].info I18n.t('opennebula_provider.info.will_not_destroy')
+          @app.call(env)
+        end
+      end
     end
   end
 end

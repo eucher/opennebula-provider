@@ -15,17 +15,22 @@ module VagrantPlugins
 
       def self.destroy
         Vagrant::Action::Builder.new.tap do |b|
-          b.use Call, DestroyConfirm do |env, b1|
-            b1.use ConfigValidate
-            b1.use ConnectOpenNebula
-            b1.use Call, CheckState do |env2, b2|
-              case env2[:machine_state]
-              when :active, :error, :suspended, :inactive
-                b2.use Destroy
-                b2.use ProvisionerCleanup if defined?(ProvisionerCleanup)
-              when :not_created
-                b2.use MessageAlreadyDestroyed
+          b.use ConfigValidate
+          b.use ConnectOpenNebula
+          b.use Call, CheckState do |env, b1|
+            case env[:machine_state]
+            when :active, :error, :suspended, :inactive
+              b1.use Call, DestroyConfirm do |env1, b2|
+                if env1[:result]
+                  b2.use Destroy
+                  b2.use ProvisionerCleanup if defined?(ProvisionerCleanup)
+                else
+                  b2.use MessageWillNotDestroy
+                end
               end
+            when :not_created
+              b1.use MessageNotCreated
+              next
             end
           end
         end
