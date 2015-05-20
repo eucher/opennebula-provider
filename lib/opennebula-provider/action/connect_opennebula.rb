@@ -1,10 +1,8 @@
-require 'opennebula-provider/helpers/rocci'
 
 module VagrantPlugins
   module OpenNebulaProvider
     module Action
       class ConnectOpenNebula
-        include Helpers::Rocci
 
         def initialize(app, env)
           @app = app
@@ -13,8 +11,11 @@ module VagrantPlugins
 
         def call(env)
           @logger.info('Connecting to OpenNebula')
-          rocci = rocci(env[:machine].provider_config)
-          env[:rocci] = rocci
+          if env[:rocci].nil?
+            @logger.info('Initializing new rocci')
+            rocci = rocci(env[:machine].provider_config)
+            env[:rocci] = rocci
+          end
 
           @app.call(env)
         end

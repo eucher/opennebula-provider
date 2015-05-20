@@ -1,4 +1,5 @@
 require_relative 'version'
+require_relative 'driver'
 
 require 'vagrant'
 
@@ -7,14 +8,14 @@ module VagrantPlugins
     class Plugin < Vagrant.plugin('2')
       name 'opennebula-provider'
 
-      provider(:opennebula) do
-        require_relative 'provider'
-        Provider
-      end
-
       config(:opennebula, :provider) do
         require_relative 'config'
         Config
+      end
+
+      provider(:opennebula) do
+        require_relative 'provider'
+        Provider
       end
     end
   end

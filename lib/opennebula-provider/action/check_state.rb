@@ -1,10 +1,7 @@
-require 'opennebula-provider/helpers/rocci'
-
 module VagrantPlugins
   module OpenNebulaProvider
     module Action
       class CheckState
-        include Helpers::Rocci
 
         def initialize(app, env)
           @app = app

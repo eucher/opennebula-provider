@@ -3,32 +3,39 @@ require 'occi-api'
 module VagrantPlugins
   module OpenNebulaProvider
     module Helpers
-      module Rocci
-        def rocci(provider_config)
-          @rocci ||= RocciApi.new(@machine, provider_config)
-        end
-      end
-
       class RocciApi
         include Vagrant::Util::Retryable
 
-        def initialize(machine, provider_config)
+        attr_accessor :cmpt_loc
+        attr_accessor :options
+
+        def initialize(cmpt_loc)
           @logger = Log4r::Logger.new('vagrant::provider::opennebula::helpers::rocciapi')
-          @config = provider_config
-          options = {
-            endpoint: @config.endpoint,
+          @cmpt_loc = cmpt_loc
+          @cmpt_loc
+        end
+
+        def set_config(provider_config)
+          @logger = Log4r::Logger.new('vagrant::provider::opennebula::helpers::rocciapi')
+          @options = {
+            endpoint: provider_config.endpoint,
             auth: {
-              type: @config.auth,
-              username: @config.username,
-              password: @config.password
+              type: provider_config.auth,
+              username: provider_config.username,
+              password: provider_config.password
             }
 #              :log => {
 #              :out   => STDERR,
 #              :level => Occi::Api::Log::DEBUG
 #            }
           }
+        end
+
+        def connect
+          @logger = Log4r::Logger.new('vagrant::provider::opennebula::helpers::rocciapi')
+          @logger.info 'Connect to RocciServer'
           begin
-            @rocci = Occi::Api::Client::ClientHttp.new(options)
+            @rocci = Occi::Api::Client::ClientHttp.new(@options)
           rescue Errno::ECONNREFUSED => e
             raise Errors::ConnectError, error: e
           rescue Occi::Api::Client::Errors::AuthnError => e

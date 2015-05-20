@@ -13,14 +13,28 @@ module VagrantPlugins
         nil
       end
 
+      def driver
+        return @driver if @driver
+        puts "@driver #{@driver}"
+        @driver = Driver.new(@machine.id)
+        @driver.set_config(@machine.provider_config)
+
+        @driver
+      end
+
       def ssh_info
         env = @machine.action('read_ssh_info')
         env[:machine_ssh_info]
       end
 
       def state
-        env = @machine.action('check_state')
-        state = env[:machine_state]
+        state = nil
+        state = :not_created if !@machine.id
+        state = driver.state(@machine.id)
+#        env[:machine_state] = state
+
+#        env = @machine.action('check_state')
+#        state = env[:machine_state]
         short = I18n.t("opennebula_provider.states.short_#{state}")
         long = I18n.t("opennebula_provider.states.long_#{state}")
         Vagrant::MachineState.new(state, short, long)
