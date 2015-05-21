@@ -4,19 +4,13 @@ module VagrantPlugins
   module OpenNebulaProvider
     module Helpers
       class RocciApi
-        include Vagrant::Util::Retryable
-
-        attr_accessor :cmpt_loc
-        attr_accessor :options
-
-        def initialize(cmpt_loc)
+        def initialize
           @logger = Log4r::Logger.new('vagrant::provider::opennebula::helpers::rocciapi')
-          @cmpt_loc = cmpt_loc
-          @cmpt_loc
         end
 
-        def set_config(provider_config)
+        def fill_config(provider_config)
           @logger = Log4r::Logger.new('vagrant::provider::opennebula::helpers::rocciapi')
+          @config = provider_config
           @options = {
             endpoint: provider_config.endpoint,
             auth: {
@@ -121,16 +115,6 @@ module VagrantPlugins
             end
           end.reject! { |n| n.nil? }.first
           networkinterface[:address]
-        end
-
-        def wait_for_state(env, state)
-          retryable(tries: 100, sleep: 6) do
-            next if env[:interrupted]
-            result = machine_state(env[:machine].id)
-
-            yield result if block_given?
-            fail Errors::ComputeError, error: 'Not ready' if result != state
-          end
         end
 
         private

@@ -9,7 +9,8 @@ module VagrantPlugins
 
         def call(env)
           @logger.info I18n.t('opennebula_provider.info.destroying', machine: env[:machine].id)
-          env[:rocci].delete(env[:machine].id)
+          driver = env[:machine].provider.driver
+          driver.delete(env[:machine].id)
           env[:machine].id = nil
           @app.call(env)
         end

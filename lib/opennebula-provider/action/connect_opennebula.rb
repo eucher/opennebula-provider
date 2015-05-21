@@ -1,4 +1,3 @@
-
 module VagrantPlugins
   module OpenNebulaProvider
     module Action

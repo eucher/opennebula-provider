@@ -8,9 +8,9 @@ module VagrantPlugins
         end
 
         def call(env)
-          @logger.info I18n.t('opennebula_provider.info.stop', machine: env[:machine].id)
-          env[:rocci].stop(env[:machine].id)
-          env[:rocci].wait_for_state(env, 'suspended')
+          env[:ui].info I18n.t('opennebula_provider.info.halt', machine: env[:machine].id)
+          driver = env[:machine].provider.driver
+          driver.stop(env[:machine].id)
           @app.call(env)
         end
       end

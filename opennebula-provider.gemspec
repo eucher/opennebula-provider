@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.version       = VagrantPlugins::OpenNebulaProvider::VERSION
   spec.authors       = ['Cherdancev Evgeni']
   spec.email         = ['cyber@sibnet.ru']
-  spec.description   = %q{OpenNebula provider for Vagrant}
+  spec.description   = %q(OpenNebula provider for Vagrant)
   spec.summary       = spec.description
   spec.homepage      = ''
   spec.license       = 'MIT'

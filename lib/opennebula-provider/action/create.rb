@@ -9,17 +9,8 @@ module VagrantPlugins
 
         def call(env)
           @logger.info I18n.t('opennebula_provider.info.creating')
-          result = env[:rocci].compute
-          env[:machine].id = result
-          env[:rocci].wait_for_state(env, 'active')
-          env[:ui].info I18n.t('opennebula_provider.info.waiting_for_sshd')
-          if !env[:interrupted]
-            while true
-              break if env[:interrupted]
-              break if env[:machine].communicate.ready?
-              sleep 2
-            end
-          end
+          driver = env[:machine].provider.driver
+          env[:machine].id = driver.create
           @app.call(env)
         end
       end

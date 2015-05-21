@@ -7,6 +7,8 @@ require_relative 'action/read_ssh_info'
 require_relative 'action/sync_folders'
 require_relative 'action/start'
 require_relative 'action/stop'
+require_relative 'action/wait_for_state'
+require_relative 'action/wait_for_ssh'
 
 module VagrantPlugins
   module OpenNebulaProvider
@@ -16,7 +18,6 @@ module VagrantPlugins
       def self.destroy
         Vagrant::Action::Builder.new.tap do |b|
           b.use ConfigValidate
-          b.use ConnectOpenNebula
           b.use Call, CheckState do |env, b1|
             case env[:machine_state]
             when :active, :error, :suspended, :inactive
@@ -39,7 +40,6 @@ module VagrantPlugins
       def self.up
         Vagrant::Action::Builder.new.tap do |b|
           b.use ConfigValidate
-          b.use ConnectOpenNebula
           b.use Call, CheckState do |env, b1|
             case env[:machine_state]
             when :active
@@ -49,6 +49,7 @@ module VagrantPlugins
             when :not_created, :inactive
               b1.use Create
             end
+            b1.use WaitForState, 'active'
           end
         end
       end
@@ -56,11 +57,11 @@ module VagrantPlugins
       def self.halt
         Vagrant::Action::Builder.new.tap do |b|
           b.use ConfigValidate
-          b.use ConnectOpenNebula
           b.use Call, CheckState do |env1, b1|
             case env1[:machine_state]
             when :active
               b1.use Stop
+              b1.use WaitForState, 'suspended'
             when :suspended
               b1.use MessageAlreadyHalted
             when :not_created, :inactive
@@ -73,7 +74,6 @@ module VagrantPlugins
       def self.reload
         Vagrant::Action::Builder.new.tap do |b|
           b.use ConfigValidate
-          b.use ConnectOpenNebula
           b.use Call, CheckState do |env1, b1|
             case env1[:machine_state]
             when :not_created
@@ -90,7 +90,6 @@ module VagrantPlugins
       def self.check_state
         Vagrant::Action::Builder.new.tap do |b|
           b.use ConfigValidate
-          b.use ConnectOpenNebula
           b.use CheckState
         end
       end
@@ -106,7 +105,6 @@ module VagrantPlugins
       def self.read_ssh_info
         Vagrant::Action::Builder.new.tap do |b|
           b.use ConfigValidate
-          b.use ConnectOpenNebula
           b.use ReadSSHInfo
         end
       end

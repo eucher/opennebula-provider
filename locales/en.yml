@@ -19,6 +19,10 @@ en:
         Instance will not be destroyed, declined
       state: |-
         Instance state is %{state}
+      halt: |-
+        Instance is shutdown...
+      start: |-
+        Starting the instance...
       waiting_for_sshd: |-
         Instance is active, waiting for sshd daemon startup...
       rsyncing: |-

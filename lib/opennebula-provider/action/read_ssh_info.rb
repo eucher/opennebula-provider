@@ -8,14 +8,15 @@ module VagrantPlugins
         end
 
         def call(env)
-          env[:machine_ssh_info] = read_ssh_info(env[:rocci], env[:machine])
+          env[:machine_ssh_info] = read_ssh_info(env[:machine])
           @app.call(env)
         end
 
-        def read_ssh_info(rocci, machine)
+        def read_ssh_info(machine)
           return nil if machine.id.nil?
+          driver = machine.provider.driver
 
-          host = rocci.ssh_info(machine.id)
+          host = driver.ssh_info(machine.id)
           { host: host, port: 22 }
         end
       end
