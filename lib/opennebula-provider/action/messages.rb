@@ -33,6 +33,7 @@ module VagrantPlugins
           @app.call(env)
         end
       end
+
       class MessageNotCreated
         def initialize(app, env)
           @app = app
@@ -51,6 +52,17 @@ module VagrantPlugins
 
         def call(env)
           env[:ui].info I18n.t('opennebula_provider.info.will_not_destroy')
+          @app.call(env)
+        end
+      end
+
+      class MessageHalted
+        def initialize(app, env)
+          @app = app
+        end
+
+        def call(env)
+          env[:ui].info I18n.t('opennebula_provider.info.halted')
           @app.call(env)
         end
       end

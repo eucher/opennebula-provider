@@ -1,5 +1,4 @@
 require_relative 'action/check_state'
-require_relative 'action/connect_opennebula'
 require_relative 'action/create'
 require_relative 'action/destroy'
 require_relative 'action/messages'
@@ -97,8 +96,17 @@ module VagrantPlugins
       def self.provision
         Vagrant::Action::Builder.new.tap do |b|
           b.use ConfigValidate
-          b.use Provision
-          b.use SyncFolders
+          b.use Call, CheckState do |env1, b1|
+            case env1[:machine_state]
+            when :not_created, :inactive
+              b1.use MessageNotCreated
+            when :suspended
+              b1.use MessageHalted
+            else
+              b1.use Provision
+              b1.use SyncFolders
+            end
+          end
         end
       end
 
@@ -112,7 +120,16 @@ module VagrantPlugins
       def self.ssh
         Vagrant::Action::Builder.new.tap do |b|
           b.use ConfigValidate
-          b.use SSHExec
+          b.use Call, CheckState do |env1, b1|
+            case env1[:machine_state]
+            when :not_created, :inactive
+              b1.use MessageNotCreated
+            when :suspended
+              b1.use MessageHalted
+            else
+              b1.use SSHExec
+            end
+          end
         end
       end
     end

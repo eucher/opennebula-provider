@@ -21,6 +21,8 @@ en:
         Instance state is %{state}
       halt: |-
         Instance is shutdown...
+      halted: |-
+        Instance is halted
       start: |-
         Starting the instance...
       waiting_for_sshd: |-
