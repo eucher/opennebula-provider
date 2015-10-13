@@ -41,7 +41,7 @@ end
 
 ## Configuration
 
-* `endpoint` - rOCCI server url
+* `endpoint` - OpenNebula RPC endpoint (like 'http://127.0.0.1:2633/RPC2')
 * `username` - OpenNebula username
 * `password` - OpenNebula password
 * `auth` - OpenNebula authorization method, default: basic
@@ -49,13 +49,13 @@ end
 * `resource_tpl` - OpenNebula resource template, default: small
 * `title` - OpenNebula instance name
 
-You can use ONE_USER, ONE_PASSWORD, ONE_ENDPOINT environment variables
+You can use ONE_USER, ONE_PASSWORD, ONE_XMLRPC (or ONE_ENDPOINT) environment variables
 instead of defining it in Vagrantfile.
 However, Vagrantfile's provider config has more priority.
 
 ## Contributing
 
-1. Fork it ( http://github.com/<my-github-username>/opennebula-provider/fork )
+1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
