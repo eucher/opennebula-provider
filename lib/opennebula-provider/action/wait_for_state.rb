@@ -10,7 +10,10 @@ module VagrantPlugins
 
         def call(env)
           driver = env[:machine].provider.driver
-          driver.wait_for_state(env, @state)
+          driver.wait_for_state(env, @state) do |last_state|
+#            env[:machine_state] = last_state.to_sym
+            break if last_state == :error
+          end
           @app.call(env)
         end
       end

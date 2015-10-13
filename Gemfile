@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'occi-api'
-
 group :development do
+  gem 'fog'
+  gem 'opennebula'
   gem 'vagrant', :git => 'https://github.com/mitchellh/vagrant.git'
   gem 'vagrant-spec', :git => 'https://github.com/mitchellh/vagrant-spec.git'
 end

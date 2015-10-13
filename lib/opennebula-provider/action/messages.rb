@@ -34,6 +34,17 @@ module VagrantPlugins
         end
       end
 
+      class MessageAlreadySuspended
+        def initialize(app, env)
+          @app = app
+        end
+
+        def call(env)
+          env[:ui].info I18n.t('opennebula_provider.info.already_suspended')
+          @app.call(env)
+        end
+      end
+
       class MessageNotCreated
         def initialize(app, env)
           @app = app
@@ -56,6 +67,17 @@ module VagrantPlugins
         end
       end
 
+      class MessageSuspended
+        def initialize(app, env)
+          @app = app
+        end
+
+        def call(env)
+          env[:ui].info I18n.t('opennebula_provider.info.suspended')
+          @app.call(env)
+        end
+      end
+
       class MessageHalted
         def initialize(app, env)
           @app = app
@@ -63,6 +85,17 @@ module VagrantPlugins
 
         def call(env)
           env[:ui].info I18n.t('opennebula_provider.info.halted')
+          @app.call(env)
+        end
+      end
+
+      class MessageInErrorState
+        def initialize(app, env)
+          @app = app
+        end
+
+        def call(env)
+          env[:ui].info I18n.t('opennebula_provider.info.error')
           @app.call(env)
         end
       end

@@ -8,11 +8,13 @@ en:
       not_created: |-
         Instance is not created
       already_created: |-
-        Instance already created
+        Instance is already created
       already_destroyed: |-
-        Instance already destroyed
+        Instance is already destroyed
       already_halted: |-
-        Instance already halted
+        Instance is already halted
+      already_suspended: |-
+        Instance is already suspended
       destroying: |-
         Instance %{machine} is destroying...
       will_not_destroy: |-
@@ -25,6 +27,12 @@ en:
         Instance is halted
       start: |-
         Starting the instance...
+      suspend: |-
+        Instance is suspending...
+      suspended: |-
+        Instance is suspended
+      resume: |-
+        Resuming instance...
       waiting_for_sshd: |-
         Instance is active, waiting for sshd daemon startup...
       rsyncing: |-
@@ -32,6 +40,8 @@ en:
       rsync_not_found_warning: |-
         Warning! Folder sync disabled because the rsync binary is missing in the %{side}.
         Make sure rsync is installed and the binary can be found in the PATH.
+      error: |-
+        The instance is in error state
 
     states:
       short_not_created: |-
@@ -62,12 +72,22 @@ en:
       short_error: |-
         error
       long_error: |-
-        The OpenNebula instance cannot be started
+        The OpenNebula instance is can not start
+
+      short_stopped: |-
+        stopped
+      long_stopped: |-
+        The OpenNebula instance is in stopped state (halted)
 
       short_suspended: |-
         suspended
       long_suspended: |-
-        The OpenNebula instance is suspended or halted
+        The OpenNebula instance is suspended
+
+      short_LCM_INIT_7: |-
+        FAILED
+      long_LCM_INIT_7: |-
+        The OpenNebula instance is in FAILED state
 
     config:
       endpoint: |-
@@ -76,12 +96,14 @@ en:
         Username is not set
       password: |-
         Password is not set
-      os_tpl: |-
-        An os template must defined via "os_tpl"
+      template: |-
+        An template must defined via "template_id" or "template_name"
+      title: |-
+        VM title is not set
 
     compute:
-      os_missing: |-
-        Os template "%{template}" is not defined in OpenNebula
+      template_missing: |-
+        Template "%{template}" is not defined in OpenNebula
       resource_size_missing: |-
         Resource size "%{template}" is not defined in rOCCI-server
 

@@ -1,4 +1,4 @@
-require 'opennebula-provider/helpers/rocci'
+require 'opennebula-provider/helpers/fog'
 
 module VagrantPlugins
   module OpenNebulaProvider
@@ -6,48 +6,57 @@ module VagrantPlugins
       include Vagrant::Util::Retryable
 
       def initialize
-        @rocci_driver ||= VagrantPlugins::OpenNebulaProvider::Helpers::RocciApi.new
+        @fog_driver ||= VagrantPlugins::OpenNebulaProvider::Helpers::FogApi.new
       end
 
       def config=(provider_config)
-        @rocci_driver.fill_config(provider_config)
-        @rocci_driver.connect
+        @fog_driver.fill_config(provider_config)
+        @fog_driver.connect
       end
 
       def state(cid)
-        @rocci_driver.machine_state(cid)
+        @fog_driver.machine_state(cid)
       end
 
       def create
-        @rocci_driver.compute
+        @fog_driver.compute
       end
 
       def delete(cid)
-        @rocci_driver.delete(cid)
+        @fog_driver.delete(cid)
       end
 
       def start(cid)
-        @rocci_driver.start(cid)
+        @fog_driver.start(cid)
       end
 
       def stop(cid)
-        @rocci_driver.stop(cid)
+        @fog_driver.stop(cid)
+      end
+
+      def suspend(cid)
+        @fog_driver.suspend(cid)
+      end
+
+      def resume(cid)
+        @fog_driver.resume(cid)
       end
 
       def ssh_info(cid)
-        @rocci_driver.ssh_info(cid)
+        @fog_driver.ssh_info(cid)
       end
 
       def wait_for_state(env, state)
         retryable(tries: 60, sleep: 2) do
           next if env[:interrupted]
-          result = @rocci_driver.machine_state(env[:machine].id)
+          env[:machine_state] = @fog_driver.machine_state(env[:machine].id)
 
-          yield result if block_given?
-          if result != state
+          yield env[:machine_state] if block_given?
+
+          if env[:machine_state] != state
             fail Errors::ComputeError,
               error: "Can not wait when instance will be in '#{state}' status, " \
-                     "last status is '#{result}'"
+                     "last status is '#{env[:machine_state]}'"
           end
         end
       end

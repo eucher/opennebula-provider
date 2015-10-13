@@ -4,8 +4,6 @@
 
 This is a Vagrant 1.5+ plugin that add an OpenNebula provider to Vagrant.
 
-**NOTE:** This plugin requires occi-api gem and works with [rOCCI-server](https://github.com/gwdg/rOCCI-server/).
-
 ## Features
 
 * Boot OpenNebula instances

@@ -16,8 +16,7 @@ module VagrantPlugins
         def check_state(machine)
           return :not_created unless machine.id
           driver = machine.provider.driver
-          state = driver.state(machine.id)
-          state.to_sym
+          driver.state(machine.id)
         end
       end
     end

@@ -3,9 +3,11 @@ require_relative 'action/create'
 require_relative 'action/destroy'
 require_relative 'action/messages'
 require_relative 'action/read_ssh_info'
+require_relative 'action/resume'
 require_relative 'action/sync_folders'
 require_relative 'action/start'
 require_relative 'action/stop'
+require_relative 'action/suspend'
 require_relative 'action/wait_for_state'
 require_relative 'action/wait_for_ssh'
 
@@ -19,7 +21,7 @@ module VagrantPlugins
           b.use ConfigValidate
           b.use Call, CheckState do |env, b1|
             case env[:machine_state]
-            when :active, :error, :suspended, :inactive
+            when :active, :error, :suspended, :inactive, :stopped
               b1.use Call, DestroyConfirm do |env1, b2|
                 if env1[:result]
                   b2.use Destroy
@@ -44,11 +46,22 @@ module VagrantPlugins
             when :active
               b1.use MessageAlreadyCreated
             when :suspended
+              # TODO: uncomment this with patching fog
+              # b1.use Resume
+            when :stopped
               b1.use Start
             when :not_created, :inactive
               b1.use Create
+            when :error    # in state FAILED
+              b1.use MessageInErrorState
+              next
             end
-            b1.use WaitForState, 'active'
+            b1.use Call, WaitForState, :active do |env1, b2|
+              if env1[:machine_state] == :error
+                b2.use MessageInErrorState
+                next
+              end
+            end
           end
         end
       end
@@ -60,9 +73,47 @@ module VagrantPlugins
             case env1[:machine_state]
             when :active
               b1.use Stop
-              b1.use WaitForState, 'suspended'
+              b1.use WaitForState, :stopped
             when :suspended
+              b1.use MessageSuspended
+            when :stopped
               b1.use MessageAlreadyHalted
+            when :not_created, :inactive
+              b1.use MessageNotCreated
+            end
+          end
+        end
+      end
+
+      def self.suspend
+        Vagrant::Action::Builder.new.tap do |b|
+          b.use ConfigValidate
+          b.use Call, CheckState do |env1, b1|
+            case env1[:machine_state]
+            when :active
+              # TODO: uncomment this with patching fog
+              # b1.use Suspend
+              # b1.use WaitForState, :suspended
+            when :suspended
+              b1.use MessageAlreadySuspended
+            when :not_created, :inactive
+              b1.use MessageNotCreated
+            end
+          end
+        end
+      end
+
+      def self.resume
+        Vagrant::Action::Builder.new.tap do |b|
+          b.use ConfigValidate
+          b.use Call, CheckState do |env1, b1|
+            case env1[:machine_state]
+            when :suspended
+              # TODO: uncomment this with patching fog
+              # b1.use Resume
+              # b1.use WaitForState, :active
+            when :stopped
+              b1.use MessageHalted
             when :not_created, :inactive
               b1.use MessageNotCreated
             end
@@ -101,6 +152,8 @@ module VagrantPlugins
             when :not_created, :inactive
               b1.use MessageNotCreated
             when :suspended
+              b1.use MessageSuspended
+            when :stopped
               b1.use MessageHalted
             else
               b1.use Provision
@@ -112,7 +165,6 @@ module VagrantPlugins
 
       def self.read_ssh_info
         Vagrant::Action::Builder.new.tap do |b|
-          b.use ConfigValidate
           b.use ReadSSHInfo
         end
       end
@@ -125,7 +177,9 @@ module VagrantPlugins
             when :not_created, :inactive
               b1.use MessageNotCreated
             when :suspended
-              b1.use MessageHalted
+              b1.use MessageSuspended
+            when :stopped
+              b1.use MessageStopped
             else
               b1.use SSHExec
             end
