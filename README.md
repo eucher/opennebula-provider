@@ -1,6 +1,6 @@
 # OpenNebula::Provider
 
-[![Gem Version](https://badge.fury.io/rb/opennebula-provider.svg)](https://rubygems.org/gems/opennebula-provider) 
+[![Gem Version](https://badge.fury.io/rb/opennebula-provider.svg)](https://rubygems.org/gems/opennebula-provider)
 
 This is a Vagrant 1.5+ plugin that add an OpenNebula provider to Vagrant.
 
@@ -31,10 +31,11 @@ Vagrant.configure("2") do |config|
   config.vm.box = "dummy"
 
   config.vm.provider :opennebula do |one, override|
-    one.endpoint = 'http://rOCCI-server:PORT'
+    one.endpoint = 'http://opennebula.server:2633/RPC2'
     one.username = 'YOUR NAME'
     one.password = 'YOUR PASSWORD'
-    one.os_tpl = 'OS template'
+    one.template_id = 123
+    one.title = 'my vm'
   end
 end
 ```
@@ -44,9 +45,8 @@ end
 * `endpoint` - OpenNebula RPC endpoint (like 'http://127.0.0.1:2633/RPC2')
 * `username` - OpenNebula username
 * `password` - OpenNebula password
-* `auth` - OpenNebula authorization method, default: basic
-* `os_tpl` - OpenNebula os template
-* `resource_tpl` - OpenNebula resource template, default: small
+* `template_id` - OpenNebula template id
+* `template_name` - OpenNebula template name
 * `title` - OpenNebula instance name
 
 You can use ONE_USER, ONE_PASSWORD, ONE_XMLRPC (or ONE_ENDPOINT) environment variables
