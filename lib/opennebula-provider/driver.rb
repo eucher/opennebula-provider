@@ -9,8 +9,15 @@ module VagrantPlugins
         @fog_driver ||= VagrantPlugins::OpenNebulaProvider::Helpers::FogApi.new
       end
 
-      def config=(provider_config)
-        @fog_driver.fill_config(provider_config)
+      def config=(config)
+        @fog_driver.config = config
+      end
+
+      def provider_config=(provider_config)
+        @fog_driver.provider_config = provider_config
+      end
+
+      def connect
         @fog_driver.connect
       end
 

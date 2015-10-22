@@ -11,6 +11,9 @@ module VagrantPlugins
       attr_accessor :os_tpl
       attr_accessor :resource_tpl
       attr_accessor :title
+      attr_accessor :memory
+      attr_accessor :cpu
+      attr_accessor :vcpu
 
       def initialize
         @endpoint = ENV['ONE_XMLRPC'] || ENV['ONE_ENDPOINT'] || UNSET_VALUE
@@ -22,6 +25,9 @@ module VagrantPlugins
         @os_tpl = UNSET_VALUE
         @resource_tpl = UNSET_VALUE
         @title = UNSET_VALUE
+        @memory = UNSET_VALUE
+        @cpu = UNSET_VALUE
+        @vcpu = UNSET_VALUE
       end
 
       def finalize!
@@ -40,6 +46,12 @@ module VagrantPlugins
         end
         @resource_tpl = 'small' if @resource_tpl == UNSET_VALUE
         @title = nil if @title == UNSET_VALUE
+        @memory = nil if @memory == UNSET_VALUE
+        @vcpu = nil if @vcpu == UNSET_VALUE
+        @cpu = nil if @cpu == UNSET_VALUE
+        if @cpu && ! @vcpu
+          @vcpu = @cpu
+        end
       end
 
       def validate(machine)

@@ -16,7 +16,9 @@ module VagrantPlugins
       def driver
         return @driver if @driver
         @driver = Driver.new
-        @driver.config = @machine.provider_config
+        @driver.config = @machine.config
+        @driver.provider_config = @machine.provider_config
+        @driver.connect
 
         @driver
       end

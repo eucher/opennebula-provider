@@ -4,13 +4,14 @@ module VagrantPlugins
   module OpenNebulaProvider
     module Helpers
       class FogApi
+        attr_accessor :config
+
         def initialize
           @logger = Log4r::Logger.new('vagrant::provider::opennebula::helpers::fog')
         end
 
-        def fill_config(provider_config)
-          @logger = Log4r::Logger.new('vagrant::provider::opennebula::helpers::fog')
-          @config = provider_config
+        def provider_config=(provider_config)
+          @provider_config = provider_config
           @options = {
             provider: 'OpenNebula',
             opennebula_endpoint: provider_config.endpoint,
@@ -37,19 +38,22 @@ module VagrantPlugins
         def compute
           @logger.info 'compute!'
           newvm = @fog_client.servers.new
-          if @config.template_id
-            newvm.flavor = @fog_client.flavors.get @config.template_id
-          elsif @config.template_name
-            newvm.flavor = @fog_client.flavors.get_by_filter({name: @config.template_name})
+          if @provider_config.template_id
+            newvm.flavor = @fog_client.flavors.get @provider_config.template_id
+          elsif @provider_config.template_name
+            newvm.flavor = @fog_client.flavors.get_by_filter({name: @provider_config.template_name})
           end
           if newvm.flavor.nil?
-            fail Errors::ComputeError, error: I18n.t('opennebula_provider.compute.template_missing', template: @config.template)
+            fail Errors::ComputeError, error: I18n.t('opennebula_provider.compute.template_missing', template: @provider_config.template)
           end
 
-          newvm.name = @config.title if @config.title
-          #newvm.flavor.user_variables = {} if newvm.flavor.user_variables.nil? || newvm.flavor.user_variables.empty?
-          #newvm.flavor.context = {} if newvm.flavor.context.nil? || newvm.flavor.context.empty?
-          #newvm.flavor.memory = '500mb'
+          newvm.name = @provider_config.title if @provider_config.title
+          if @config.vm.hostname != nil
+            newvm.flavor.context = (newvm.flavor.context).merge({ 'SET_HOSTNAME' => @config.vm.hostname })
+          end
+          newvm.flavor.memory = @provider_config.memory unless @provider_config.memory.nil?
+          newvm.flavor.cpu = @provider_config.cpu unless @provider_config.cpu.nil?
+          newvm.flavor.vcpu = @provider_config.vcpu unless @provider_config.vcpu.nil?
           vm = newvm.save
           vm.id
         rescue RuntimeError => e
