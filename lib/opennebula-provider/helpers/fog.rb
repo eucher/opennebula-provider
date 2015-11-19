@@ -107,7 +107,7 @@ module VagrantPlugins
 
         private
         def get_pretty_status(state, status)
-#          puts state, status
+          pretty = "#{state}_#{status}"
           case state
           when 'LCM_INIT'
             case status
@@ -134,6 +134,11 @@ module VagrantPlugins
             case status
             when 3
               pretty = 'active'
+            end
+          when 'BOOT_STOPPED_FAILURE'
+            case status
+            when 3
+              pretty = 'error'
             end
           end
           pretty.to_sym
