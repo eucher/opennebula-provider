@@ -46,7 +46,6 @@ end
 * `username` - OpenNebula username
 * `password` - OpenNebula password
 * `template_id` - OpenNebula template id
-* ~~`template_name` - OpenNebula template name~~
 * `title` - OpenNebula instance name
 * `memory` - An instance memory in MB
 * `cpu` - An instance cpus
