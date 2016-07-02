@@ -47,6 +47,7 @@ end
 * `password` - OpenNebula password
 * `template_id` - OpenNebula template id
 * `title` - OpenNebula instance name
+* `timeout` - The number of seconds to wait for the instance state to change in the OpenNebula
 * `memory` - An instance memory in MB
 * `cpu` - An instance cpus
 * `vcpu` - An instance virtual cpus

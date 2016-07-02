@@ -100,6 +100,8 @@ en:
         An template must defined via "template_id" or "template_name"
       title: |-
         VM title is not set
+      timeout: |-
+        Timeout is not an integer
 
     compute:
       template_missing: |-
