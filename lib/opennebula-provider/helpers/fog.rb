@@ -135,6 +135,11 @@ module VagrantPlugins
             when 3
               pretty = 'active'
             end
+          when 'BOOT_STOPPED'
+            case status
+            when 3
+              pretty = 'boot'
+            end
           when 'BOOT_STOPPED_FAILURE'
             case status
             when 3

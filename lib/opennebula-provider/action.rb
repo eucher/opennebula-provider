@@ -56,12 +56,7 @@ module VagrantPlugins
               b1.use MessageInErrorState
               next
             end
-            b1.use Call, WaitForState, :active do |env1, b2|
-              if env1[:machine_state] == :error
-                b2.use MessageInErrorState
-                next
-              end
-            end
+            b1.use WaitForCommunicator, [:pending, :prolog, :boot, :active]
           end
         end
       end
