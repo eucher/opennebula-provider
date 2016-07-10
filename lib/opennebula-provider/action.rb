@@ -164,6 +164,24 @@ module VagrantPlugins
         end
       end
 
+      def self.ssh_run
+        Vagrant::Action::Builder.new.tap do |b|
+          b.use ConfigValidate
+          b.use Call, CheckState do |env1, b1|
+            case env1[:machine_state]
+            when :not_created, :inactive
+              b1.use MessageNotCreated
+            when :suspended
+              b1.use MessageSuspended
+            when :stopped
+              b1.use MessageStopped
+            else
+              b1.use SSHRun
+            end
+          end
+        end
+      end
+
       def self.ssh
         Vagrant::Action::Builder.new.tap do |b|
           b.use ConfigValidate
