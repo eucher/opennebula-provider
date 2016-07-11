@@ -58,8 +58,8 @@ module VagrantPlugins
             env[:machine].communicate.sudo(
               "chown -R #{ssh_info[:username]} '#{guestpath}'")
 
-            # collect rsync excludes specified :rsync_excludes=>['path1',...] in synced_folder options
-            excludes = ['.vagrant/', 'Vagrantfile', *Array(data[:rsync_excludes])].uniq
+            # collect rsync excludes specified :rsync__exclude=>['path1',...] in synced_folder options
+            excludes = ['.vagrant/', 'Vagrantfile', *Array(data[:rsync__exclude])].uniq
 
             # Rsync over to the guest path using the SSH info
             command = [
