@@ -64,6 +64,11 @@ module VagrantPlugins
             fail Errors::ComputeError,
               error: "Can not wait when instance will be in '#{state}' status, " \
                      "last status is '#{env[:machine_state]}'"
+          else env[:machine_state] == :active
+              is_ssh_ready = env[:machine].communicate.ready?
+              if !is_ssh_ready
+                fail Errors::ComputeError, error: "SSH not ready yet"
+              end
           end
         end
       end
