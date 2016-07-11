@@ -13,7 +13,7 @@ module VagrantPlugins
         Config
       end
 
-      provider(:opennebula) do
+      provider(:opennebula, parallel: true) do
         require_relative 'provider'
         Provider
       end
