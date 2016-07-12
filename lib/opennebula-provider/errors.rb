@@ -28,6 +28,10 @@ module VagrantPlugins
       class QuotaError < OpenNebulaProviderError
         error_key(:quota)
       end
+
+      class RsyncError < OpenNebulaProviderError
+        error_key(:rsync)
+      end
     end
   end
 end
