@@ -120,3 +120,5 @@ en:
         Resource error! %{error}
       quota: |-
         Quota error! %{error}
+      rsync: |-
+        Rsync error! %{stderr}
