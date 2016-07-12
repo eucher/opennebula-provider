@@ -4,7 +4,6 @@ require_relative 'action/destroy'
 require_relative 'action/messages'
 require_relative 'action/read_ssh_info'
 require_relative 'action/resume'
-require_relative 'action/sync_folders'
 require_relative 'action/start'
 require_relative 'action/stop'
 require_relative 'action/suspend'
@@ -45,6 +44,7 @@ module VagrantPlugins
             case env[:machine_state]
             when :active
               b1.use MessageAlreadyCreated
+              next
             when :suspended
               # TODO: uncomment this with patching fog
               # b1.use Resume
@@ -57,6 +57,7 @@ module VagrantPlugins
               next
             end
             b1.use WaitForCommunicator, [:pending, :prolog, :boot, :active]
+            b1.use SyncedFolders
           end
         end
       end
@@ -152,7 +153,6 @@ module VagrantPlugins
               b1.use MessageHalted
             else
               b1.use Provision
-              b1.use SyncFolders
             end
           end
         end

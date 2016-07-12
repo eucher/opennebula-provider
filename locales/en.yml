@@ -35,11 +35,6 @@ en:
         Resuming instance...
       waiting_for_sshd: |-
         Instance is active, waiting for sshd daemon startup...
-      rsyncing: |-
-        Rsyncing folder: %{hostpath} => %{guestpath}...
-      rsync_not_found_warning: |-
-        Warning! Folder sync disabled because the rsync binary is missing in the %{side}.
-        Make sure rsync is installed and the binary can be found in the PATH.
       error: |-
         The instance is in error state
 
@@ -120,5 +115,3 @@ en:
         Resource error! %{error}
       quota: |-
         Quota error! %{error}
-      rsync: |-
-        Rsync error! %{stderr}
