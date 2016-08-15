@@ -41,7 +41,7 @@ module VagrantPlugins
           if @provider_config.template_id
             newvm.flavor = @fog_client.flavors.get @provider_config.template_id
           elsif @provider_config.template_name
-            newvm.flavor = @fog_client.flavors.get_by_filter({name: @provider_config.template_name}).first
+            newvm.flavor = @fog_client.flavors.get_by_filter({name: @provider_config.template_name}).last
           end
           if newvm.flavor.nil?
             fail Errors::ComputeError, error: I18n.t('opennebula_provider.compute.template_missing', template: @provider_config.template)
