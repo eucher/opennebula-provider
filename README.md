@@ -46,10 +46,13 @@ end
 * `username` - OpenNebula username
 * `password` - OpenNebula password
 * `template_id` - OpenNebula template id
+* `template_name` - OpenNebula template name
 * `title` - OpenNebula instance name
 * `memory` - An instance memory in MB
 * `cpu` - An instance cpus
 * `vcpu` - An instance virtual cpus
+
+You can use `template_name` parameters instead `template_id` to define template by name and if there are multiple templates with the same name will be used the most recent. 
 
 You can use ONE_USER, ONE_PASSWORD, ONE_XMLRPC (or ONE_ENDPOINT) environment variables
 instead of defining it in Vagrantfile.
