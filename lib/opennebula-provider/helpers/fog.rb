@@ -102,7 +102,7 @@ module VagrantPlugins
 
         def ssh_info(id)
           desc = @fog_client.servers.get(id)
-          desc.ip
+          desc.ip unless desc.nil?
         end
 
         private
