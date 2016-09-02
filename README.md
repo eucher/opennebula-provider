@@ -20,10 +20,6 @@ $ vagrant up --provider=opennebula
 ...
 ```
 
-## Box Format
-
-TODO: Write box format creation instruction here.
-
 ## Usage
 
 ```
