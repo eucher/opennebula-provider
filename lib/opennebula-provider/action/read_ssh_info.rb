@@ -17,7 +17,7 @@ module VagrantPlugins
           driver = machine.provider.driver
 
           host = driver.ssh_info(machine.id)
-          { host: host, port: 22 }
+          { host: host, port: 22 } unless host.nil?
         end
       end
     end
