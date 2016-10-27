@@ -115,7 +115,7 @@ module VagrantPlugins
           case state
           when 'LCM_INIT'
             case status
-            when 1
+            when 1, 3
               pretty = 'pending'
             when 4
               pretty = 'stopped'
