@@ -115,7 +115,7 @@ module VagrantPlugins
           case state
           when 'LCM_INIT'
             case status
-            when 1
+            when 1, 3
               pretty = 'pending'
             when 4
               pretty = 'stopped'
@@ -124,7 +124,7 @@ module VagrantPlugins
             when 7
               pretty = 'error'
             end
-          when 'PROLOG'
+          when 'PROLOG', 'PROLOG_RESUME'
             case status
             when 3
               pretty = 'prolog'
