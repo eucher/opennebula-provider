@@ -31,7 +31,7 @@ Vagrant.configure("2") do |config|
     one.username = 'YOUR NAME'
     one.password = 'YOUR PASSWORD'
     one.template_id = 123
-    one.title = 'my vm'
+    one.title = 'my-vm'
   end
 end
 ```
