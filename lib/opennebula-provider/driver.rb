@@ -54,7 +54,9 @@ module VagrantPlugins
       end
 
       def wait_for_state(env, state)
-        retryable(tries: 60, sleep: 2) do
+        timeout = env[:machine].provider_config.timeout
+        max_tries = timeout / 2
+        retryable(tries: max_tries, sleep: 2) do
           next if env[:interrupted]
           env[:machine_state] = @fog_driver.machine_state(env[:machine].id)
 

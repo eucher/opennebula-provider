@@ -11,6 +11,7 @@ module VagrantPlugins
       attr_accessor :os_tpl
       attr_accessor :resource_tpl
       attr_accessor :title
+      attr_accessor :timeout
       attr_accessor :memory
       attr_accessor :cpu
       attr_accessor :vcpu
@@ -25,6 +26,7 @@ module VagrantPlugins
         @os_tpl = UNSET_VALUE
         @resource_tpl = UNSET_VALUE
         @title = UNSET_VALUE
+        @timeout = UNSET_VALUE
         @memory = UNSET_VALUE
         @cpu = UNSET_VALUE
         @vcpu = UNSET_VALUE
@@ -46,6 +48,7 @@ module VagrantPlugins
         end
         @resource_tpl = 'small' if @resource_tpl == UNSET_VALUE
         @title = nil if @title == UNSET_VALUE
+        @timeout = 120 if @timeout == UNSET_VALUE
         @memory = nil if @memory == UNSET_VALUE
         @vcpu = nil if @vcpu == UNSET_VALUE
         @cpu = nil if @cpu == UNSET_VALUE
@@ -61,6 +64,7 @@ module VagrantPlugins
         errors << I18n.t('opennebula_provider.config.password') unless @password
         errors << I18n.t('opennebula_provider.config.template') unless @template
         errors << I18n.t('opennebula_provider.config.title') unless @title
+        errors << I18n.t('opennebula_provider.config.timeout') unless @timeout.is_a? Integer
 
         { 'OpenNebula provider' => errors }
       end
