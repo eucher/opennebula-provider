@@ -47,6 +47,7 @@ end
 * `memory` - An instance memory in MB
 * `cpu` - An instance cpus
 * `vcpu` - An instance virtual cpus
+* `disk_size` - Disk size, in MB, for templates with ONLY one disk
 
 You can use `template_name` parameters instead `template_id` to define template by name and if there are multiple templates with the same name will be used the most recent. 
 

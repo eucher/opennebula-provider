@@ -58,6 +58,18 @@ module VagrantPlugins
           newvm.flavor.memory = @provider_config.memory unless @provider_config.memory.nil?
           newvm.flavor.cpu = @provider_config.cpu unless @provider_config.cpu.nil?
           newvm.flavor.vcpu = @provider_config.vcpu unless @provider_config.vcpu.nil?
+
+          if newvm.flavor.disk.instance_of? Array
+            fail Errors::AllocateError, error: I18n.t(
+                'opennebula_provider.errors.allocate',
+                error: 'Template has more than one disk attached and `disk_size` ' +
+                       'feature is supported only for templates with only one')
+          end
+
+          if @provider_config.disk_size != nil
+            newvm.flavor.disk["size"] = @provider_config.disk_size
+          end
+          @logger.warn "Deploying VM with options #{newvm.flavor.inspect}"
           vm = newvm.save
           vm.id
         rescue RuntimeError => e
