@@ -136,7 +136,7 @@ module VagrantPlugins
             when 7
               pretty = 'error'
             end
-          when 'PROLOG'
+          when 'PROLOG', 'PROLOG_RESUME'
             case status
             when 3
               pretty = 'prolog'
