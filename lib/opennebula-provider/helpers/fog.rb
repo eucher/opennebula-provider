@@ -67,7 +67,7 @@ module VagrantPlugins
           end
 
           if @provider_config.disk_size != nil
-            newvm.flavor.disk["size"] = @provider_config.disk_size
+            newvm.flavor.disk["SIZE"] = @provider_config.disk_size
           end
           @logger.warn "Deploying VM with options #{newvm.flavor.inspect}"
           vm = newvm.save
