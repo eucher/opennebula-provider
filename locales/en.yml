@@ -59,6 +59,11 @@ en:
       long_waiting: |-
         Instance is waiting to create or boot
 
+      short_boot: |-
+        boot
+      long_waiting: |-
+        OpenNebula is waiting for the hypervisor to create the VM
+
       short_running: |-
         running
       long_running: |-
