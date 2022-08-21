@@ -15,6 +15,7 @@ module VagrantPlugins
       attr_accessor :cpu
       attr_accessor :vcpu
       attr_accessor :disk_size
+      attr_accessor :user_variables
 
       def initialize
         @endpoint = ENV['ONE_XMLRPC'] || ENV['ONE_ENDPOINT'] || UNSET_VALUE
@@ -30,6 +31,7 @@ module VagrantPlugins
         @cpu = UNSET_VALUE
         @vcpu = UNSET_VALUE
         @disk_size = UNSET_VALUE
+        @user_variables = UNSET_VALUE
       end
 
       def finalize!
@@ -55,6 +57,7 @@ module VagrantPlugins
           @vcpu = @cpu
         end
         @disk_size = nil if @disk_size == UNSET_VALUE
+        @user_variables = nil if @user_variables == UNSET_VALUE
       end
 
       def validate(machine)

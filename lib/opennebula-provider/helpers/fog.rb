@@ -69,6 +69,7 @@ module VagrantPlugins
           if @provider_config.disk_size != nil
             newvm.flavor.disk["SIZE"] = @provider_config.disk_size
           end
+          newvm.flavor.user_variables = @provider_config.user_variables unless @provider_config.user_variables.nil?
           @logger.warn "Deploying VM with options #{newvm.flavor.inspect}"
           vm = newvm.save
           vm.id

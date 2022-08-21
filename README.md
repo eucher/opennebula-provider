@@ -48,6 +48,7 @@ end
 * `cpu` - An instance cpus
 * `vcpu` - An instance virtual cpus
 * `disk_size` - Disk size, in MB, for templates with ONLY one disk
+* `user_variables` - An instance specified variables (like 'CPU_MODEL = [ MODEL = host-passthrough ]')
 
 You can use `template_name` parameters instead `template_id` to define template by name and if there are multiple templates with the same name will be used the most recent. 
 
